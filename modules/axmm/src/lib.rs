@@ -14,6 +14,7 @@ pub use self::backend::Backend;
 
 use axerrno::{AxError, AxResult};
 use axhal::mem::phys_to_virt;
+use axhal::paging::PagingError;
 use kspin::SpinNoIrq;
 use lazyinit::LazyInit;
 use memory_addr::{PhysAddr, VirtAddr, va};
@@ -27,6 +28,17 @@ fn mapping_err_to_ax_err(err: MappingError) -> AxError {
         MappingError::InvalidParam => AxError::InvalidInput,
         MappingError::AlreadyExists => AxError::AlreadyExists,
         MappingError::BadState => AxError::BadState,
+    }
+}
+
+fn paging_err_to_ax_err(err: PagingError) -> AxError {
+    warn!("Paging error: {:?}", err);
+    match err {
+        PagingError::NoMemory => AxError::NoMemory,
+        PagingError::NotAligned => AxError::InvalidInput,
+        PagingError::NotMapped => AxError::NotFound,
+        PagingError::AlreadyMapped => AxError::AlreadyExists,
+        PagingError::MappedToHugePage => AxError::InvalidInput,
     }
 }
 
@@ -79,5 +91,5 @@ pub fn init_memory_management() {
 
 /// Initializes kernel paging for secondary CPUs.
 pub fn init_memory_management_secondary() {
-    axhal::paging::set_kernel_page_table_root(kernel_page_table_root());
+    unsafe { axhal::arch::write_page_table_root(kernel_page_table_root()) };
 }

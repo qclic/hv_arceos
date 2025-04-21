@@ -4,12 +4,13 @@ use axerrno::{AxError, AxResult, ax_err};
 use axhal::mem::phys_to_virt;
 use axhal::paging::{MappingFlags, PageTable};
 use memory_addr::{
-    MemoryAddr, PAGE_SIZE_4K, PageIter4K, PhysAddr, VirtAddr, VirtAddrRange, is_aligned_4k,
+    MemoryAddr, PAGE_SIZE_4K, PageIter4K, PhysAddr, VirtAddr, VirtAddrRange, is_aligned_4k, pa,
 };
 use memory_set::{MemoryArea, MemorySet};
 
 use crate::backend::Backend;
 use crate::mapping_err_to_ax_err;
+use crate::paging_err_to_ax_err;
 
 /// The virtual memory address space.
 pub struct AddrSpace {
@@ -111,10 +112,17 @@ impl AddrSpace {
         }
 
         let offset = start_vaddr.as_usize() - start_paddr.as_usize();
-        let area = MemoryArea::new(start_vaddr, size, flags, Backend::new_linear(offset));
-        self.areas
-            .map(area, &mut self.pt, false)
-            .map_err(mapping_err_to_ax_err)?;
+        self.pt
+            .map_region(
+                start_vaddr,
+                |va| pa!(va.as_usize() - offset),
+                size,
+                flags,
+                false, // allow_huge
+                false, // flush_tlb_by_page
+            )
+            .map_err(paging_err_to_ax_err)?
+            .flush_all();
         Ok(())
     }
 
