@@ -1398,9 +1398,9 @@ checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
 
 [[package]]
 name = "percpu"
-version = "0.2.0"
+version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "01e56c0c558952222967b592899f98765b48590e7bd7403bfd7075f73afc6ed6"
+checksum = "95e24fa01075d3d4235b84d3dd5a0ec0fd3040602065ea155acd0849e9067007"
 dependencies = [
  "cfg-if",
  "kernel_guard",
@@ -1411,9 +1411,9 @@ dependencies = [
 
 [[package]]
 name = "percpu_macros"
-version = "0.2.0"
+version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a9f4cc54a2e471ff72f1499461ba381ad4eae9cbd60d29c258545b995e406e0"
+checksum = "421082ebe971ea22e82137de45ab6b9500bb178b364ebba02858bf7f80ec6471"
 dependencies = [
  "proc-macro2",
  "quote",
