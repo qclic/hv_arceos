@@ -20,6 +20,9 @@ use lazyinit::LazyInit;
 use memory_addr::{PhysAddr, VirtAddr, va};
 use memory_set::MappingError;
 
+const USER_ASPACE_BASE: usize = 0x1000;
+const USER_ASPACE_SIZE: usize = 0x7fff_ffff_f000;
+
 static KERNEL_ASPACE: LazyInit<SpinNoIrq<AddrSpace>> = LazyInit::new();
 
 fn mapping_err_to_ax_err(err: MappingError) -> AxError {
@@ -55,8 +58,8 @@ pub fn new_kernel_aspace() -> AxResult<AddrSpace> {
 }
 
 /// Creates a new address space for user processes.
-pub fn new_user_aspace(base: VirtAddr, size: usize) -> AxResult<AddrSpace> {
-    let mut aspace = AddrSpace::new_empty(base, size)?;
+pub fn new_user_aspace() -> AxResult<AddrSpace> {
+    let mut aspace = AddrSpace::new_empty(VirtAddr::from(USER_ASPACE_BASE), USER_ASPACE_SIZE)?;
     if !cfg!(target_arch = "aarch64") && !cfg!(target_arch = "loongarch64") {
         // ARMv8 (aarch64) and LoongArch64 use separate page tables for user space
         // (aarch64: TTBR0_EL1, LoongArch64: PGDL), so there is no need to copy the
