@@ -17,7 +17,6 @@ paging = ["axalloc"]
 irq = []
 tls = ["alloc"]
 rtc = ["x86_rtc", "riscv_goldfish", "arm_pl031"]
-uspace = ["paging"]
 default = []
 hv = ["paging", "cortex-a", "percpu/arm-el2", "page_table_entry/arm-el2", "arm_gicv2/el2", "dep:crate_interface"]
 
