@@ -161,12 +161,18 @@ pub extern "C" fn rust_main(cpu_id: usize, dtb: usize) -> ! {
         #[cfg(feature = "fs")]
         axfs::init_filesystems(all_devices.block);
 
+        info!("init_network");
+
         #[cfg(feature = "net")]
         axnet::init_network(all_devices.net);
+
+        info!("init_display");
 
         #[cfg(feature = "display")]
         axdisplay::init_display(all_devices.display);
     }
+
+    info!("start_secondary_cpus");
 
     #[cfg(feature = "smp")]
     self::mp::start_secondary_cpus(cpu_id);
