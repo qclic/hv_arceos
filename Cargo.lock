@@ -172,12 +172,10 @@ dependencies = [
  "axio",
  "axlog",
  "axnet",
- "axns",
  "axruntime",
  "axsync",
  "axtask",
  "bindgen 0.69.5",
- "ctor_bare",
  "flatten_objects",
  "lazy_static",
  "spin",
@@ -403,7 +401,6 @@ dependencies = [
  "axfs_ramfs",
  "axfs_vfs",
  "axio",
- "axns",
  "axsync",
  "axtask",
  "cap_access",
@@ -552,15 +549,6 @@ dependencies = [
  "log",
  "smoltcp",
  "spin",
-]
-
-[[package]]
-name = "axns"
-version = "0.1.0"
-dependencies = [
- "axns",
- "crate_interface",
- "lazyinit",
 ]
 
 [[package]]
