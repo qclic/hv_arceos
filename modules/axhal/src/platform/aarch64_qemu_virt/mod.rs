@@ -27,7 +27,6 @@ unsafe extern "C" {
 }
 
 pub(crate) unsafe extern "C" fn rust_entry(cpu_id: usize, dtb: usize) {
-    crate::mem::clear_bss();
     #[cfg(not(feature = "hv"))]
     crate::arch::write_page_table_root0(0.into()); // disable low address access
     crate::cpu::init_primary(cpu_id);

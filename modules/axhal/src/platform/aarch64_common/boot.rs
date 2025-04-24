@@ -1,4 +1,5 @@
 use aarch64_cpu::{asm, asm::barrier, registers::*};
+use somehal::{mem::cpu_id, println};
 use core::ptr::addr_of_mut;
 use page_table_entry::aarch64::{A64PTE, MemAttr};
 use tock_registers::interfaces::{ReadWriteable, Readable, Writeable};
@@ -107,36 +108,11 @@ unsafe fn init_boot_page_table() {
     crate::platform::mem::init_boot_page_table(addr_of_mut!(BOOT_PT_L0), addr_of_mut!(BOOT_PT_L1));
 }
 
-/// Kernel entry point with Linux image header.
-///
-/// Some bootloaders require this header to be present at the beginning of the
-/// kernel image.
-///
-/// Documentation: <https://docs.kernel.org/arch/arm64/booting.html>
-/// The earliest entry point for the primary CPU.
-#[naked]
-#[unsafe(no_mangle)]
-#[unsafe(link_section = ".text.boot")]
-unsafe extern "C" fn _start() -> ! {
-    unsafe {
-        // PC = bootloader load address
-        // X0 = dtb
-        core::arch::naked_asm!("
-            add     x13, x18, #0x16     // 'MZ' magic
-            b       {entry}             // Branch to kernel start, magic
-
-            .quad   0                   // Image load offset from start of RAM, little-endian
-            .quad   _ekernel - _start   // Effective size of kernel image, little-endian
-            .quad   {flags}             // Kernel flags, little-endian
-            .quad   0                   // reserved
-            .quad   0                   // reserved
-            .quad   0                   // reserved
-            .ascii  \"ARM\\x64\"        // Magic number
-            .long   0                   // reserved (used for PE COFF offset)",
-            flags = const FLAG_LE | FLAG_PAGE_SIZE_4K | FLAG_ANY_MEM,
-            entry = sym _start_primary,
-        )
-    }
+#[somehal::entry]
+fn main(cpu_id: usize, dtb: usize) -> ! {
+    println!("Hello, world!");
+    //unsafe{crate::platform::rust_entry(cpu_id, dtb);}
+    unimplemented!()
 }
 
 /// The earliest entry point for the primary CPU.
