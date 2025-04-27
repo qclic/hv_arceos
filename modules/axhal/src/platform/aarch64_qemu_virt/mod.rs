@@ -9,7 +9,14 @@ pub mod irq {
 }
 
 pub mod console {
-    pub use crate::platform::aarch64_common::pl011::*;
+    pub fn write_bytes(bytes: &[u8]) {
+        somehal::console::write_bytes(bytes);
+    }
+
+    pub fn read_bytes(bytes: &mut [u8]) -> usize {
+        panic!("read_bytes is not implemented yet");
+        return 0;
+    }
 }
 
 pub mod time {
@@ -30,7 +37,6 @@ pub(crate) unsafe extern "C" fn rust_entry(cpu_id: usize, dtb: usize) {
     #[cfg(not(feature = "hv"))]
     crate::arch::write_page_table_root0(0.into()); // disable low address access
     crate::cpu::init_primary(cpu_id);
-    super::aarch64_common::pl011::init_early();
     super::aarch64_common::generic_timer::init_early();
     rust_main(cpu_id, dtb);
 }

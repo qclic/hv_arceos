@@ -1,5 +1,4 @@
 use aarch64_cpu::{asm, asm::barrier, registers::*};
-use somehal::{mem::cpu_id, println};
 use core::ptr::addr_of_mut;
 use page_table_entry::aarch64::{A64PTE, MemAttr};
 use tock_registers::interfaces::{ReadWriteable, Readable, Writeable};
@@ -110,9 +109,7 @@ unsafe fn init_boot_page_table() {
 
 #[somehal::entry]
 fn main(cpu_id: usize, dtb: usize) -> ! {
-    println!("Hello, world!");
-    //unsafe{crate::platform::rust_entry(cpu_id, dtb);}
-    unimplemented!()
+    unsafe{crate::platform::rust_entry(cpu_id, dtb);}
 }
 
 /// The earliest entry point for the primary CPU.

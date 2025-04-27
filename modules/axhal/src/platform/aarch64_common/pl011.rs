@@ -2,14 +2,12 @@
 
 use arm_pl011::Pl011Uart;
 use kspin::SpinNoIrq;
+use lazyinit::LazyInit;
 use memory_addr::PhysAddr;
-
-use crate::mem::phys_to_virt;
 
 const UART_BASE: PhysAddr = pa!(axconfig::devices::UART_PADDR);
 
-static UART: SpinNoIrq<Pl011Uart> =
-    SpinNoIrq::new(Pl011Uart::new(phys_to_virt(UART_BASE).as_mut_ptr()));
+static UART: LazyInit<SpinNoIrq<Pl011Uart>> = LazyInit::new();
 
 /// Writes a byte to the console.
 pub fn putchar(c: u8) {

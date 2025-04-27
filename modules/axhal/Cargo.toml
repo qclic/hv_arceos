@@ -41,7 +41,7 @@ axconfig = { workspace = true }
 axalloc = { workspace = true, optional = true }
 cortex-a = { version = "8.1.1", optional = true }
 somehal = {path = "/code/somehal/somehal", optional = true}
-percpu = {path = "/code/percpu/percpu", optional = true}
+percpu = {path = "/code/qcl/percpu/percpu"}
 
 [target.'cfg(target_arch = "x86_64")'.dependencies]
 x86 = "0.52"
@@ -60,7 +60,7 @@ aarch64-cpu = "10.0"
 tock-registers = "0.9"
 arm_gicv2 = { git = "https://github.com/arceos-hypervisor/arm_gicv2" }
 crate_interface = { version = "0.1.3", optional = true }
-arm_pl011 = "0.1"
+arm_pl011 = { path = "/code/qcl/arm_pl011" }
 arm_pl031 = { version = "0.2", optional = true }
 dw_apb_uart = "0.1"
 
