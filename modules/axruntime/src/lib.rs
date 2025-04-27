@@ -172,8 +172,6 @@ pub extern "C" fn rust_main(cpu_id: usize, dtb: usize) -> ! {
         axdisplay::init_display(all_devices.display);
     }
 
-    info!("start_secondary_cpus");
-
     #[cfg(feature = "smp")]
     self::mp::start_secondary_cpus(cpu_id);
 
@@ -197,9 +195,7 @@ pub extern "C" fn rust_main(cpu_id: usize, dtb: usize) -> ! {
     while !is_init_ok() {
         core::hint::spin_loop();
     }
-
     unsafe { main() };
-
     #[cfg(feature = "multitask")]
     axtask::exit(0);
     #[cfg(not(feature = "multitask"))]

@@ -95,22 +95,13 @@ pub unsafe fn set_current_task_ptr<T>(ptr: *const T) {
 
 #[allow(dead_code)]
 pub(crate) fn init_primary(cpu_id: usize) {
-    println!("cpu_id: {}", cpu_id);
     percpu::imple::init();
-    println!("init_percpu_reg");
     percpu::imple::init_percpu_reg(cpu_id);
-    println!("CPU_ID and IS_BSP");
     unsafe {
-        println!("A");
-        let cpu_id_ptr = CPU_ID.current_ptr();
         CPU_ID.write_current_raw(cpu_id);
-        println!("B");
         IS_BSP.write_current_raw(true);
-        println!("C");
     }
-    println!("arch::cpu_init");
     crate::arch::cpu_init();
-    println!("over");
 }
 
 #[allow(dead_code)]

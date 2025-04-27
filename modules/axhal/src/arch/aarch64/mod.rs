@@ -77,7 +77,7 @@ pub fn read_page_table_root0() -> PhysAddr {
 /// This function is unsafe as it changes the virtual memory address space.
 pub unsafe fn write_page_table_root(root_paddr: PhysAddr) {
     let old_root = read_page_table_root();
-    trace!("set page table root: {:#x} => {:#x}", old_root, root_paddr);
+    debug!("set page table root: {:#x} => {:#x}", old_root, root_paddr);
     if old_root != root_paddr {
         #[cfg(not(feature = "hv"))]
         {
@@ -110,6 +110,7 @@ pub unsafe fn write_page_table_root0(root_paddr: PhysAddr) {
 /// entry that maps the given virtual address.
 #[inline]
 pub fn flush_tlb(vaddr: Option<VirtAddr>) {
+    debug!("flush_tlb");
     unsafe {
         if let Some(vaddr) = vaddr {
             #[cfg(not(feature = "hv"))]
@@ -132,6 +133,7 @@ pub fn flush_tlb(vaddr: Option<VirtAddr>) {
             }
         }
     }
+    debug!("flush_tlb finish");
 }
 
 /// Flushes the entire instruction cache.
