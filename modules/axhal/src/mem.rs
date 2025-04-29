@@ -49,14 +49,14 @@ pub struct MemRegion {
 #[inline]
 pub fn virt_to_phys(vaddr: VirtAddr) -> PhysAddr {
     let paddr = somehal::mem::virt_to_phys(somehal::mem::VirtAddr::new(vaddr.as_usize()));
-    memory_addr::PhysAddr::from_usize(paddr.as_usize())
+    memory_addr::PhysAddr::from_usize(paddr.raw())
 }
 
 /// Converts a physical address to a virtual address.
 #[inline]
 pub fn phys_to_virt(paddr: PhysAddr) -> VirtAddr {
     let vaddr = somehal::mem::phys_to_virt(somehal::mem::PhysAddr::new(paddr.as_usize()));
-    memory_addr::VirtAddr::from_usize(vaddr.as_usize())
+    memory_addr::VirtAddr::from_usize(vaddr.raw())
 }
 
 /// Returns an iterator over all physical memory regions.
@@ -64,7 +64,7 @@ pub fn memory_regions() -> impl Iterator<Item = MemRegion> {
     somehal::mem::memory_regions().map(|reg| {
         MemRegion {
             flags: map_flags(reg.clone()),
-            paddr: memory_addr::PhysAddr::from(reg.phys_start.as_usize()),
+            paddr: memory_addr::PhysAddr::from(reg.phys_start.raw()),
             size: reg.size,
             name: reg.name,
         }

@@ -244,8 +244,9 @@ dependencies = [
 [[package]]
 name = "arm_pl011"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "efcf6afca4502993a737ba1e00952d1321078689da92bf7aab27d4e5756c0bec"
 dependencies = [
- "somehal",
  "tock-registers 0.8.1",
 ]
 
@@ -827,9 +828,9 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "chrono"
-version = "0.4.40"
+version = "0.4.41"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1a7964611d71df112cb1730f2ee67324fcf4d0fc6606acbbe9bfe06df124637c"
+checksum = "c469d952047f47f91b68d1cba3f10d63c11d73e4636f24f08daf0278abf01c4d"
 dependencies = [
  "android-tzdata",
  "iana-time-zone",
@@ -1334,6 +1335,7 @@ dependencies = [
 [[package]]
 name = "kmem-region"
 version = "0.1.0"
+source = "git+https://github.com/rcore-os/somehal.git#ab9aff7796354c0c02ac9d930f6ddee04d71c0b3"
 dependencies = [
  "bitflags 2.9.0",
  "prettyplease",
@@ -1551,6 +1553,7 @@ checksum = "42f5e15c9953c5e4ccceeb2e7382a716482c34515315f7b03532b8b4e8393d2d"
 [[package]]
 name = "page-table-generic"
 version = "0.6.0"
+source = "git+https://github.com/rcore-os/somehal.git#ab9aff7796354c0c02ac9d930f6ddee04d71c0b3"
 dependencies = [
  "bitflags 2.9.0",
  "log",
@@ -1596,7 +1599,6 @@ dependencies = [
  "cfg-if",
  "kernel_guard",
  "percpu_macros",
- "somehal",
  "spin 0.9.8",
  "x86",
 ]
@@ -1613,6 +1615,7 @@ dependencies = [
 [[package]]
 name = "pie-boot"
 version = "0.1.0"
+source = "git+https://github.com/rcore-os/somehal.git#ab9aff7796354c0c02ac9d930f6ddee04d71c0b3"
 dependencies = [
  "aarch64-cpu 10.0.0",
  "bitflags 2.9.0",
@@ -1972,6 +1975,7 @@ dependencies = [
 [[package]]
 name = "somehal"
 version = "0.1.0"
+source = "git+https://github.com/rcore-os/somehal.git#ab9aff7796354c0c02ac9d930f6ddee04d71c0b3"
 dependencies = [
  "aarch64-cpu 10.0.0",
  "acpi",
@@ -1989,6 +1993,7 @@ dependencies = [
  "pie-boot",
  "prettyplease",
  "quote",
+ "raw-cpuid 11.5.0",
  "riscv 0.13.0",
  "riscv_goldfish",
  "sbi-rt",
@@ -2004,6 +2009,7 @@ dependencies = [
 [[package]]
 name = "somehal-macros"
 version = "0.1.0"
+source = "git+https://github.com/rcore-os/somehal.git#ab9aff7796354c0c02ac9d930f6ddee04d71c0b3"
 dependencies = [
  "abi-singleton",
  "darling",
@@ -2138,9 +2144,9 @@ checksum = "3da5db5a963e24bc68be8b17b6fa82814bb22ee8660f192bb182771d498f09a3"
 
 [[package]]
 name = "toml_edit"
-version = "0.22.25"
+version = "0.22.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "10558ed0bd2a1562e630926a2d1f0b98c827da99fabd3fe20920a59642504485"
+checksum = "310068873db2c5b3e7659d2cc35d21855dbafa50d1ce336397c666e3cb08137e"
 dependencies = [
  "indexmap",
  "toml_datetime",
@@ -2150,9 +2156,9 @@ dependencies = [
 
 [[package]]
 name = "toml_write"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "28391a4201ba7eb1984cfeb6862c0b3ea2cfe23332298967c749dddc0d6cd976"
+checksum = "bfb942dfe1d8e29a7ee7fcbde5bd2b9a25fb89aa70caea2eba3bee836ff41076"
 
 [[package]]
 name = "unicode-ident"

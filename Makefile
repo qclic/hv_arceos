@@ -132,7 +132,7 @@ GDB ?= gdb-multiarch
 OUT_DIR ?= $(APP)
 
 APP_NAME := $(shell basename $(APP))
-LD_SCRIPT := link.x
+LD_SCRIPT := $(TARGET_DIR)/$(TARGET)/$(MODE)/linker_$(PLAT_NAME).lds
 OUT_ELF := $(OUT_DIR)/$(APP_NAME)_$(PLAT_NAME).elf
 OUT_BIN := $(patsubst %.elf,%.bin,$(OUT_ELF))
 OUT_UIMG := $(patsubst %.elf,%.uimg,$(OUT_ELF))
