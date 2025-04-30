@@ -29,34 +29,34 @@ fn handle_page_fault(tf: &TrapFrame) {
     }
 }
 
-#[unsafe(no_mangle)]
-fn x86_trap_handler(tf: &mut TrapFrame) {
-    match tf.vector as u8 {
-        PAGE_FAULT_VECTOR => handle_page_fault(tf),
-        BREAKPOINT_VECTOR => debug!("#BP @ {:#x} ", tf.rip),
-        GENERAL_PROTECTION_FAULT_VECTOR => {
-            panic!(
-                "#GP @ {:#x}, error_code={:#x}:\n{:#x?}",
-                tf.rip, tf.error_code, tf
-            );
-        }
-        #[cfg(feature = "uspace")]
-        LEGACY_SYSCALL_VECTOR => super::syscall::x86_syscall_handler(tf),
-        IRQ_VECTOR_START..=IRQ_VECTOR_END => {
-            handle_trap!(IRQ, tf.vector as _);
-        }
-        _ => {
-            panic!(
-                "Unhandled exception {} ({}, error_code={:#x}) @ {:#x}:\n{:#x?}",
-                tf.vector,
-                vec_to_str(tf.vector),
-                tf.error_code,
-                tf.rip,
-                tf
-            );
-        }
-    }
-}
+// #[unsafe(no_mangle)]
+// fn x86_trap_handler(tf: &mut TrapFrame) {
+//     match tf.vector as u8 {
+//         PAGE_FAULT_VECTOR => handle_page_fault(tf),
+//         BREAKPOINT_VECTOR => debug!("#BP @ {:#x} ", tf.rip),
+//         GENERAL_PROTECTION_FAULT_VECTOR => {
+//             panic!(
+//                 "#GP @ {:#x}, error_code={:#x}:\n{:#x?}",
+//                 tf.rip, tf.error_code, tf
+//             );
+//         }
+//         #[cfg(feature = "uspace")]
+//         LEGACY_SYSCALL_VECTOR => super::syscall::x86_syscall_handler(tf),
+//         IRQ_VECTOR_START..=IRQ_VECTOR_END => {
+//             handle_trap!(IRQ, tf.vector as _);
+//         }
+//         _ => {
+//             panic!(
+//                 "Unhandled exception {} ({}, error_code={:#x}) @ {:#x}:\n{:#x?}",
+//                 tf.vector,
+//                 vec_to_str(tf.vector),
+//                 tf.error_code,
+//                 tf.rip,
+//                 tf
+//             );
+//         }
+//     }
+// }
 
 fn vec_to_str(vec: u64) -> &'static str {
     if vec < 32 {

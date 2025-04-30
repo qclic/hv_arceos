@@ -34,7 +34,6 @@ fn current_cpu_id() -> usize {
 unsafe extern "C" fn rust_entry(magic: usize, _mbi: usize) {
     // TODO: handle multiboot info
     if magic == self::boot::MULTIBOOT_BOOTLOADER_MAGIC {
-        crate::mem::clear_bss();
         crate::cpu::init_primary(current_cpu_id());
         self::uart16550::init();
         self::time::init_early();
