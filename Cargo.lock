@@ -2085,7 +2085,7 @@ checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
 [[package]]
 name = "sdmmc"
 version = "0.1.0"
-source = "git+https://github.com/YanQD/sdmmc.git#f28eb176207971d074d73a346829bae7bd29da47"
+source = "git+https://github.com/YanQD/sdmmc.git#2b8c7db74cd99101cfeb69421b5132e037bd9d45"
 dependencies = [
  "aarch64-cpu 10.0.0",
  "arm_pl011",
